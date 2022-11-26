@@ -14,8 +14,8 @@ A nossa proposta passa por desenvolver uma aplicação móvel que localize os es
 
 Funcionalidades
 - Sistema de logins com o objetivo de criar uma comunidade - Luís Sá;
-- Possibilidade dos utilizadores indicarem novos espaços onde é permitido o estacionamento; 
-- Reconhecer que o espaço permita o estacionamento;
+- Possibilidade dos utilizadores indicarem novos espaços onde é permitido o estacionamento - Bernardo
+- Reconhecer que o espaço permita o estacionamento - Simão;
 - Relatório (Introdução e Ferramenta Utilizada) - Fernando.
 
 
