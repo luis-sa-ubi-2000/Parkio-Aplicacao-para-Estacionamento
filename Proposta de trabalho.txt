@@ -1,0 +1,27 @@
+--- PARKIO ---
+
+Constituição do grupo:
+- Luís Sá (a46753);
+- Bernardo Claro (a46879);
+- Fernando Salcedas (a45685);
+- Simão Marques (a45582)
+
+Proposta:
+
+Contexto e Objetivos 
+O objetivo da nossa aplicação vai muito de encontro com o tema cinco das propostas de trabalho do professor. Ao longo do projeto irão com certeza surgir ideias, e essas vão ser debatidas com o professor para saber se faz sentido avançarmos com as mesmas tendo como finalidade a disponibilização da nossa aplicação na Google Play, como também a adaptação do código-fonte para ser disponibilizada na Apple Store. 
+A nossa proposta passa por desenvolver uma aplicação móvel que localize os espaços vazios num local onde é permitido estacionar, utilizando geolocalização do Google Maps e a nossa comunidade de utilizadores.
+
+Funcionalidades
+- Sistema de logins com o objetivo de criar uma comunidade - Luís Sá;
+- Possibilidade dos utilizadores indicarem novos espaços onde é permitido o estacionamento; 
+- Reconhecer que o espaço permita o estacionamento;
+- Relatório (Introdução e Ferramenta Utilizada) - Fernando.
+
+
+Funcionalidades extra
+- Utilizando geolocalização, detetar os estacionamentos livres;
+- Identificar estacionamentos livres antes de chegar ao parque de estacionamento.
+
+
+ 
