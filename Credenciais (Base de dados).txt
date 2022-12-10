@@ -1,0 +1,8 @@
+--- Portal Azure ---
+Email: pdm_estacionamento2022@hotmail.com
+Pass: PDMestacionamento2022
+
+
+--- Base de dados SQL ---
+Utilizador: pdm_parkio
+Pass: Estacionamento2022
