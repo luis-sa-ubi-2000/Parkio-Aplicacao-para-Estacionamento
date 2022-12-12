@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/home"
+        android:title="Logout"
+        android:icon="@drawable/ic_baseline_logout_24"/>
+    <item android:id="@+id/notification"
+        android:title="Forum"
+        android:icon="@drawable/ic_baseline_directions_car_24"/>
+    <item android:id="@+id/settings"
+        android:title="Mapa"
+        android:icon="@drawable/ic_baseline_map_24"/>
+</menu>
