@@ -1,4 +1,4 @@
-package pt.ubi.di.pdm.forumpark;
+package com.ubi.parkio;
 
 
 
