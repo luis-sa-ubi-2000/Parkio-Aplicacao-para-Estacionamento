@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
 
     HomeFragment homeFragment = new HomeFragment();
-    SettingsFragment settingsFragment = new SettingsFragment();
+    MapsFragment mapsFragment = new MapsFragment();
     NotificationFragment notificationFragment = new NotificationFragment();
 
     @Override
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.container,notificationFragment).commit();
                         return true;
                     case R.id.settings:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,settingsFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container,mapsFragment).commit();
                         return true;
                 }
 
