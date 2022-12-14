@@ -4,10 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -15,6 +17,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.maps.model.StyleSpan;
 
 public class MapsFragment extends Fragment {
 
@@ -31,9 +36,32 @@ public class MapsFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            LatLng sydney = new LatLng(-34, 151);
-            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            // Set the map coordinates.
+            LatLng SerraShoping = new LatLng(40.270499, -7.502793);
+            // Set the map type to Hybrid.
+            googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            // Add a marker on the map coordinates.
+            googleMap.addMarker(new MarkerOptions()
+                    .position(SerraShoping)
+                    .title("Serra Shoping")
+                    .snippet("Lotation: 72 / 150"));
+            // Move the camera to the map coordinates and zoom in closer.
+            googleMap.moveCamera(CameraUpdateFactory.zoomTo(18));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(SerraShoping));
+            // Display traffic.
+            googleMap.setTrafficEnabled(true);
+
+            // Instantiates a new Polyline object and adds points to define a rectangle
+
+            PolylineOptions polylineOptions = new PolylineOptions()
+                    .add(new LatLng(40.270987093830335, -7.503207275608098))
+                    .add(new LatLng(40.27043330130643, -7.5021583910719585))
+                    .add(new LatLng(40.270100642913484, -7.502483985610732))
+                    .add(new LatLng(40.270561891625114, -7.503310414504393))
+                    .add(new LatLng(40.270987093830335, -7.503207275608098));
+
+            // Get back the mutable Polyline
+            Polyline polyline = googleMap.addPolyline(polylineOptions);
         }
     };
 
