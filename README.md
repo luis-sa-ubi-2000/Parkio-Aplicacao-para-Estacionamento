@@ -16,3 +16,7 @@ Sistema base (backend) --> https://pt.000webhost.com/members/website/list
 ## CREDENTIALS
 Email: pdm_estacionamento2022@hotmail.com  
 Pass: PDMestacionamento2022
+
+### Data Base
+Utilizador: pdm_parkio  
+Pass: Estacionamento2022
