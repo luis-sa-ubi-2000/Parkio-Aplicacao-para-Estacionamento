@@ -26,6 +26,8 @@ import com.google.android.gms.maps.model.StyleSpan;
 
 public class MapsFragment extends Fragment {
 
+    private static final String TAG = MapsFragment.class.getSimpleName();
+
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
         /**
@@ -37,6 +39,7 @@ public class MapsFragment extends Fragment {
          * install it inside the SupportMapFragment. This method will only be triggered once the
          * user has installed Google Play services and returned to the app.
          */
+
         @Override
         public void onMapReady(GoogleMap googleMap) {
 
@@ -44,31 +47,18 @@ public class MapsFragment extends Fragment {
             backend.setParkingLots(googleMap);
 
             // Set the map coordinates.
+            // TODO: GET USER CURRENT COORDS
             LatLng SerraShoping = new LatLng(40.270499, -7.502793);
             // Set the map type to Hybrid.
             googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-            // Add a marker on the map coordinates.
-            //googleMap.addMarker(new MarkerOptions()
-            //        .position(SerraShoping)
-            //        .title("Serra Shoping")
-            //        .snippet("Lotation: 72 / 150"));
-            // Move the camera to the map coordinates and zoom in closer.
+
             googleMap.moveCamera(CameraUpdateFactory.zoomTo(18));
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(SerraShoping));
+
             // Display traffic.
             googleMap.setTrafficEnabled(true);
             googleMap.getUiSettings().setZoomControlsEnabled(true);
 
-            // Instantiates a new Polyline object and adds points to define a rectangle
-            //PolylineOptions polylineOptions = new PolylineOptions()
-            //        .add(new LatLng(40.270987093830335, -7.503207275608098))
-            //        .add(new LatLng(40.27043330130643, -7.5021583910719585))
-            //        .add(new LatLng(40.270100642913484, -7.502483985610732))
-            //        .add(new LatLng(40.270561891625114, -7.503310414504393))
-            //        .add(new LatLng(40.270987093830335, -7.503207275608098));
-
-            // Get back the mutable Polyline
-            //Polyline polyline = googleMap.addPolyline(polylineOptions);
         }
     };
 
@@ -94,15 +84,15 @@ public class MapsFragment extends Fragment {
         try {
             // Customise the styling of the base map using a JSON object defined
             // in a raw resource file.
-            //boolean success = map.setMapStyle(
-            //        MapStyleOptions.loadRawResourceStyle(
-            //                this, R.raw.map_style));
+            boolean success = map.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                            this.getContext(), R.raw.map_style));
 
-            //if (!success) {
-            //    Log.e("Map","Style parsing failed.");
-            //}
+            if (!success) {
+                Log.e(TAG, "Style parsing failed.");
+            }
         } catch (Resources.NotFoundException e) {
-            Log.e("Map", "Can't find style. Error: ", e);
+            Log.e(TAG, "Can't find style. Error: ", e);
         }
     }
 }
