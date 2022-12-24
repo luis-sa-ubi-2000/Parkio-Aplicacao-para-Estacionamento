@@ -1,6 +1,9 @@
 package com.ubi.parkio;
 
 import android.graphics.Color;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
@@ -8,10 +11,21 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class backend {
+
+    private static final String TAG = MapsFragment.class.getSimpleName();
 
     public static Integer empty_stroke = 0xFF00FF00;
     public static Integer empty_fill = 0x7F00FF00;
@@ -21,6 +35,8 @@ public class backend {
 
     public static Integer full_stroke = 0xFFFF0000;
     public static Integer full_fill = 0x7FFF0000;
+
+    static FirebaseFirestore firestore;
 
     public static void setParkingLots(GoogleMap map){
         ArrayList<MarkerOptions> parkingLotsMarkers = getParkingLotsMarker();
@@ -37,24 +53,35 @@ public class backend {
     }
 
     private static ArrayList<MarkerOptions> getParkingLotsMarker(){
-        //TODO: CALL THE DB TO GET MARKERS INFO!
+        firestore = FirebaseFirestore.getInstance();
         ArrayList<MarkerOptions> markers = new ArrayList<MarkerOptions>();
-
-        LatLng position = new LatLng(40.270499, -7.502793);
-        MarkerOptions marker = new MarkerOptions()
-                .position(position)
-                .title("Serra Shoping")
-                .snippet("Lotation: 72 / 150");
-
-        LatLng position1 = new LatLng(40.27705142155579, -7.508625802936676);
-        MarkerOptions marker1 = new MarkerOptions()
-                .position(position1)
-                .title("Estacionamento UBI - 6ª Fase")
-                .snippet("Lotation: 13 / 60");
-
-        markers.add(marker);
-        markers.add(marker1);
-
+        System.out.println("!!!!!!!!!!!!!!!!");
+        firestore.collection("Parkinglot")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                try {
+                                    MarkerOptions marker = new MarkerOptions()
+                                            .position(new LatLng(Double.parseDouble(document.get("Latitude").toString()),
+                                                    Double.parseDouble(document.get("Latitude").toString())))
+                                            .title(document.get("Title").toString())
+                                            .snippet("Lotation: "+document.get("OccupiedSpots").toString()+" / "+document.get("MaxLotation").toString());
+                                    System.out.println("??????????");
+                                    System.out.println(document.get("Latitude").toString());
+                                    markers.add(marker);
+                                } catch (Exception e){
+                                    Log.e("Error getting markers", e.getMessage());
+                                }
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+        System.out.println(markers);
         return markers;
     }
 
