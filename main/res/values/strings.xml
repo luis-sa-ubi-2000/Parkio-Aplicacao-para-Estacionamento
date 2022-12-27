@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Login_Registo</string>
+    <string name="login_label">Login</string>
+    <string name="user_text">Email</string>
+    <string name="password">Password</string>
+    <string name="entrar">Login</string>
+    <string name="log_text">Loja</string>
+    <string name="contador">Tentativas restantes:</string>
+    <string name="image">logo</string>
+    <string name="email">email</string>
+    <string name="pass">pass</string>
+    <string name="logo2">logo2</string>
+    <string name="scroll">________________________</string>
+    <string name="traco">_______________________</string>
+    <string name="capa">capa</string>
+    <string name="hoodie">hoodie</string>
+    <string name="checkbox">Memorizar palavra-passe</string>
+    <string name="Registar">Registar</string>
+    <string name="Traco">______________</string>
+    <string name="nif">NIF</string>
+    <string name="data_aniversario">Data Aniversário</string>
+    <string name="confirme_password">Confirme Password</string>
+    <string name="nif_image">TODO</string>
+    <string name="questao_registo">Ainda não está registado?</string>
+    <string name="traco_regista">________________________</string>
+    <string name="phone_image">TODO</string>
+    <string name="registar">Registar</string>
+    <string name="entrou">Entrou</string>
+    <string name="recuperacao">Esqueceste-te da tua palavra-passe?</string>
+    <string name="Traco2">__________________________</string>
+    <string name="Recupera">Recuperar palavra-passe</string>
+    <string name="recuperacao2">Introduz o teu email na caixa de texto abaixo:</string>
+    <string name="seguinte">Seguinte</string>
+    <string name="nova_password">Nova palavra-passe</string>
+    <string name="confirma_password">Confirma a palavra-passe</string>
+    <string name="concluir">Concluir</string>
+</resources>
