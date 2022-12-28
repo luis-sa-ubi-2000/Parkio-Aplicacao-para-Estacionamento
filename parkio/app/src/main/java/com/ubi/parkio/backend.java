@@ -1,5 +1,6 @@
 package com.ubi.parkio;
 
+import android.os.Handler;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -10,12 +11,16 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.annotations.Nullable;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class backend {
@@ -37,15 +42,14 @@ public class backend {
 
     public static void setParkingLots(GoogleMap map){
         setParkingLotsMarkers(map);
-
         setParkingLotsPolys(map);
-
     }
 
     private static void setParkingLotsMarkers(GoogleMap map){
         firestore = FirebaseFirestore.getInstance();
 
         firestore.collection("Parkinglot")
+                .orderBy("Id")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -84,6 +88,8 @@ public class backend {
 
         for (int i = 0; i < backend.getCapacity().size(); i++) {
             System.out.println(i);
+            System.out.println(backend.getCapacity().get(i));
+
             // Check the parkinglot lotation
             Integer currlotation = Integer.valueOf(backend.getCapacity().get(i).get("OccupiedSpots"));
             Integer maxlotation = Integer.valueOf(backend.getCapacity().get(i).get("MaxLotation"));
@@ -113,28 +119,56 @@ public class backend {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
-                                PolygonOptions poly = new PolygonOptions();
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    poly.add(new LatLng(Float.valueOf(document.get("Latitude").toString()), Float.valueOf(document.get("Longitude").toString())));
-                                    poly.add(new LatLng(Float.valueOf(document.get("Latitude").toString()), Float.valueOf(document.get("Longitude").toString())));
-                                    poly.add(new LatLng(Float.valueOf(document.get("Latitude").toString()), Float.valueOf(document.get("Longitude").toString())));
-                                    poly.add(new LatLng(Float.valueOf(document.get("Latitude").toString()), Float.valueOf(document.get("Longitude").toString())));
-                                    poly.add(new LatLng(Float.valueOf(document.get("Latitude").toString()), Float.valueOf(document.get("Longitude").toString())));
-                                    System.out.println(document);
-                                }
-                                poly.strokeColor(finalStroke_color);
-                                poly.fillColor(finalFill_color);
+                                try {
+                                    PolygonOptions poly = new PolygonOptions();
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        poly.add(new LatLng(Float.valueOf(document.get("Latitude").toString()), Float.valueOf(document.get("Longitude").toString())));
+                                        System.out.println(document);
+                                    }
+                                    poly.strokeColor(finalStroke_color);
+                                    poly.fillColor(finalFill_color);
 
-                                map.addPolygon(poly);
+                                    System.out.println(poly.getPoints());
+
+                                    map.addPolygon(poly);
+                                } catch (Exception e){
+                                    Log.e("Error adding polys", e.getMessage());
+                                }
+
                             } else {
                                 Log.d(TAG, "Error getting documents: ", task.getException());
                             }
                         }
                     });
+
         }
 
+        backend.clearCapacity();
+    }
 
+    public static void updateParkinglots(Integer seconds, GoogleMap map) {
+        firestore = FirebaseFirestore.getInstance();
 
+        firestore.collection("Parkinglot")
+                .orderBy("Id")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(TAG, "Listen failed.", e);
+                            return;
+                        }
+
+                        List<String> cities = new ArrayList<>();
+                        for (QueryDocumentSnapshot doc : value) {
+                            if (doc.get("Title") != null) {
+                                cities.add(doc.getString("Title"));
+                            }
+                        }
+                        Log.d(TAG, "Current cites in CA: " + cities);
+                    }
+                });
 
     }
 
@@ -145,4 +179,6 @@ public class backend {
     public static void addCapacity(Map<String, String> capacity) {
         backend.capacity.add(capacity);
     }
+
+    public static void clearCapacity(){capacity.clear();}
 }
