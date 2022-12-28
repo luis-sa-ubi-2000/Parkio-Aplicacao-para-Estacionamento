@@ -2,11 +2,19 @@ package com.ubi.parkio;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,10 +31,18 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.StyleSpan;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class MapsFragment extends Fragment {
 
     private static final String TAG = MapsFragment.class.getSimpleName();
+    private static GoogleMap map = null;
+    static FirebaseFirestore firestore;
+
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -42,6 +58,7 @@ public class MapsFragment extends Fragment {
 
         @Override
         public void onMapReady(GoogleMap googleMap) {
+            map = googleMap;
 
             changeMapStyle(googleMap);
             backend.setParkingLots(googleMap);
@@ -57,10 +74,46 @@ public class MapsFragment extends Fragment {
 
             // Display traffic.
             googleMap.setTrafficEnabled(true);
+
             googleMap.getUiSettings().setZoomControlsEnabled(true);
 
+            if (ContextCompat.checkSelfPermission(MapsFragment.this.getActivity(),
+                    Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                if (ActivityCompat.shouldShowRequestPermissionRationale(MapsFragment.this.getActivity(),
+                        Manifest.permission.ACCESS_FINE_LOCATION)){
+                    ActivityCompat.requestPermissions(MapsFragment.this.getActivity(),
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                }else{
+                    ActivityCompat.requestPermissions(MapsFragment.this.getActivity(),
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                }
+            }
+
+            googleMap.setMyLocationEnabled(true);
         }
+
     };
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        firestore = FirebaseFirestore.getInstance();
+
+        firestore.collection("Parkinglot")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(TAG, "Listen failed.", e);
+                            return;
+                        }
+
+                        map.clear();
+                        backend.setParkingLots(map);
+                    }
+                });
+    }
 
     @Nullable
     @Override
@@ -86,7 +139,7 @@ public class MapsFragment extends Fragment {
             // in a raw resource file.
             boolean success = map.setMapStyle(
                     MapStyleOptions.loadRawResourceStyle(
-                            this.getContext(), R.raw.map_style));
+                            MapsFragment.this.getActivity(), R.raw.map_style));
 
             if (!success) {
                 Log.e(TAG, "Style parsing failed.");
