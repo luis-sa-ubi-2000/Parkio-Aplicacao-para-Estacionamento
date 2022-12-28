@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "1020265337532",
+    "firebase_url": "https://parkio-db537-default-rtdb.firebaseio.com",
+    "project_id": "parkio-db537",
+    "storage_bucket": "parkio-db537.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020265337532:android:c72c093de47d46235a76b9",
+        "android_client_info": {
+          "package_name": "com.ubi.parkio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1020265337532-tok65024i6ski4b78e1p0vn2u839onnp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbeIBKOiLGzJWLMBKQV55R2iRB-VsSv58"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1020265337532-tok65024i6ski4b78e1p0vn2u839onnp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020265337532:android:6ab7ddac4eae1c505a76b9",
+        "android_client_info": {
+          "package_name": "pt.ubi.di.pdm.login_registo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1020265337532-tok65024i6ski4b78e1p0vn2u839onnp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbeIBKOiLGzJWLMBKQV55R2iRB-VsSv58"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1020265337532-tok65024i6ski4b78e1p0vn2u839onnp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
