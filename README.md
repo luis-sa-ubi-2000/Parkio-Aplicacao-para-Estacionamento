@@ -8,11 +8,3 @@ Trabalho coletivo - PARKIO
 - Aplicação telemóvel (aplicação do user que irá comunicar com o Sistema base e mostrar as informações dos estacionamentos)
 
 Sistema base (backend) --> https://pt.000webhost.com/members/website/list
-
-## CREDENTIALS
-Email: pdm_estacionamento2022@hotmail.com  
-Pass: PDMestacionamento2022
-
-### Data Base
-Utilizador: pdm_parkio  
-Pass: Estacionamento2022
